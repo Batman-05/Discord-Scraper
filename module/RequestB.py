@@ -82,7 +82,8 @@ class DiscordRequest(object):
         # Retrieve the response from the request.
         response = connection.getresponse()
 
-        # TODO: Remove this before releasing
+        # TODO: Remove this before releasing but this is where we make our changes to prevent exceeding the rate limit
+        #https://discord.com/developers/docs/topics/rate-limits
         for header in response.getheaders():
             if header[0] == 'Retry-After':
                 print(header)

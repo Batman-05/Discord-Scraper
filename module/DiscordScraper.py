@@ -1,6 +1,6 @@
 """
-@author:  Dracovian
-@date:    2021-02-10
+@author:  Batman-05
+@date:    2022-03-12
 @license: WTFPL
 """
 
@@ -122,8 +122,10 @@ class DiscordScraper(object):
         # Determine if the apiversion argument is not set.
         if apiversion is None:
             
-            # Set it to the default value of "v8"
-            apiversion = 'v8'
+            # TODO do a try catch type scenario, if our API v9 is not valid (find it dynamically), go to v10 -- we could also assume that versions
+            # will always be +1
+            # v8 is deprecated, current versions are v9 and v10
+            apiversion = 'v9'
         
         # Generate a direct file path to the configuration file.
         configfile = path.join(getcwd(), configfile)
@@ -368,10 +370,12 @@ class DiscordScraper(object):
         
         # Split the url into parts.
         urlparts = url.split('/')
+        #bat#TODO: I think this uses the forward slash as a delimeter.
 
         # Generate a file name from the url parts.
         filename = DiscordScraper.getSafeName('{0}_{1}'.format(urlparts[-2], urlparts[-1])) if self.sanitizeFileNames else '{0}_{1}'.format(urlparts[-2], urlparts[-1])
-
+        #bat#TODO: i dont know the getSafeName function and the parameters it takes.
+        
         # Join the file name with the location.
         filename = path.join(location, filename)
 
@@ -413,9 +417,11 @@ class DiscordScraper(object):
 
                             # Get the proxied file name from the proxied URL.
                             proxiedfilename = proxied.split('/')[-1].split('?')[0]
+                            #bat#TODO: look at the split function to understand how this works
 
                             # Get the mimetype for the proxied file name.
                             proxiedfilemime = DiscordScraper.getFileMimetype(proxiedfilename).split('/')[0]
+                            #bat#TODO: another function to understand, getFileMimetype
 
                             # Determine if the proxied file is an image file.
                             if self.types['images'] and proxiedfilemime == 'image':
@@ -470,6 +476,7 @@ class DiscordScraper(object):
 
         # Return a string formed from the joining of an array of "random" characters.
         return ''.join([choice(charset) for i in range(length)])
+        #bat#TODO: do we need to ensure there are no duplicates?
 
     @staticmethod
     def getFileMimetype(name):
@@ -477,6 +484,7 @@ class DiscordScraper(object):
         Return the guessed mimetype for the input file name.
         :param name: The file name whose mimetype we want to guess.
         """
+        #bat# Think of MIME Type as the file extensions of the internet, need to know how to handle the data
 
         # Create a variable to store the guessed mimetype for the file.
         mimetype = MimeTypes().guess_type(name)[0]
@@ -503,6 +511,8 @@ class DiscordScraper(object):
 
         # Return the timestamp value bitshifted to the left by 22 bits.
         return int(timestamp) << 22
+        #bat# why are we bitshifting it by 22bits?
+        #TODO: Should there be an = for the left shift like there is for the right shift?
     
     @staticmethod
     def snowflakeToTimestamp(snowflake):
@@ -579,6 +589,7 @@ class DiscordScraper(object):
 
             # Set the name variable to the newly generated name.
             name = '{0}.{1}'.format(randname, extension)
+            #bat#TODO: i havent fully understoon the '{0}.{1}' and what it represents
         
         # Create a variable to store the valid characters of our file name.
         valid = []

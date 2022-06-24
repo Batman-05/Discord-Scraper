@@ -1,6 +1,6 @@
 """
-@author:  Dracovian
-@date:    2021-02-10
+@author:  Batman-05
+@date:    2022-03-12
 @license: WTFPL
 """
 
@@ -68,9 +68,9 @@ def startDM(scraper, alias, channel, day=None):
     :param day: The datetime object for the day that we're wanting to scrape.
     """
 
-    # TODO: I still need to get around to implementing DM scraping, hopefully I can figure out a method of getting the true DM url from a user ID/Snowflake value to make things easier to configure.
-    pass
-
+    #TODO: I still need to get around to implementing DM scraping, hopefully I can figure out a method of getting the true DM url from a user ID/Snowflake value to make things easier to configure.
+    #pass
+    
 def startGuild(scraper, guild, channel, day=None):
     """
     The initialization function for the scraper script.
@@ -84,7 +84,7 @@ def startGuild(scraper, guild, channel, day=None):
 
     # Generate a valid URL to the undocumented API function for the search feature.
     search = 'https://discord.com/api/{0}/channels/{1}/messages/search?min_id={2}&max_id={3}&{4}'.format(scraper.apiversion, channel, snowflakes[0], snowflakes[1], scraper.query)
-
+    
     # Update the HTTP request headers to set the referer to the current guild channel URL.
     scraper.headers.update({'Referer': 'https://discord.com/channels/{0}/{1}'.format(guild, channel)})
 
@@ -113,7 +113,7 @@ def startGuild(scraper, guild, channel, day=None):
             startGuild(scraper, guild, channel, day)
         
         # Read the response data.
-        data = loads(response.read().decode('iso-8859-1'))
+        data = loads(response.read().decode('iso-8859-1')) #what is iso-8859-1? - just another encoding type like utf
         
         # Get the number of posts.
         posts = data['total_results']
@@ -144,7 +144,6 @@ def startGuild(scraper, guild, channel, day=None):
                 except:
                     pass
             
-
         # Cache the JSON data if there's anything to cache (don't fill the cache directory with useless API response junk).
         if posts > 0:
             scraper.downloadJSON(data, day.year, day.month, day.day)

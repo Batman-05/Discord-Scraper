@@ -17,7 +17,7 @@ Open your Discord app and enter the user settings.
 ![https://imgur.com/HnNnmRT](https://i.imgur.com/HnNnmRT.png "Step 1")
 
 **Steps 2 and 3:**
-Traverse to appearance and enable developer mode if it is not enabled.
+Under the App settings, go to Advanced and enable developer mode (applicable for the web app and desktop version).
 ![https://imgur.com/LTrGjVX](https://i.imgur.com/LTrGjVX.png "Step 2")
 ![https://imgur.com/7ItCXBV](https://i.imgur.com/7ItCXBV.png "Step 3")
 
@@ -57,6 +57,10 @@ Gather the channel ID that you want to scrape from by right-clicking on the chan
 
 **Step 7:**
 Run the script to start the downloading process.
+
+**Step 8:**
+Run the JsonFormat.py script under the modules folder to output your scrape in a readable format. 
+NOTE: This script is still a work in progress but it already makes the results legible so I figured I would push it.
 
 ## Notes
 
