@@ -72,8 +72,21 @@ class DiscordRequest(object):
         # Catch HTTPError
         try:
 
+            # Grab the domain name from the URL.
+            domain = url.split('/')[2].split(':')[0]
+            
+            # Determine if the domain is safe or unsafe.
+            if domain.endswith('.discordapp.net') or domain.endswith('.discord.com') or domain in ['discordapp.net', 'discord.com']:
+                safedomain = True
+            
+            # Ensure that we're not sending authorization tokens to non-Domain domains.
+            if safedomain:
+                headers = self.headers
+            else:
+                headers = {'User-Agent': 'Mozilla/5.0', 'Referer': 'https://discord.com/'}
+            
             # Create a request to connect to the URL.
-            connection = Request(url, headers=self.headers)
+            connection = Request(url, headers=headers)
 
             # Grab the response data from the URL.
             response = urlopen(connection)
@@ -91,21 +104,14 @@ class DiscordRequest(object):
                 # Grab the domain name for the redirected location.
                 domain = url.split('/')[2].split(':')[0]
 
-                # If the domain is a part of Discord then re-run this function.
-                if domain in ['discordapp.com', 'discord.com']:
-                    self.sendRequest(url)
-                
-                # Throw a warning message to acknowledge an untrusted redirect.
-                warn('Ignored unsafe redirect to {0}.'.format(url))
+                # Follow the redirect
+                self.sendRequest(url)
 
-                # Return nothing to signify a failed request.
-                return None
+            # Return nothing to signify a failed request.
+            return None
 
         except HTTPError as e:
-
-            # TODO: Remove this when releasing
-            print(self.headers)
-
+            
             # Otherwise throw a warning message to acknowledge a failed connection.
             warn('HTTP: {0} from {1}.'.format(e.code, url))
 

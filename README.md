@@ -1,62 +1,79 @@
-# Discord Scraper
+## Setup
 
-## Table of Contents
-  - [Configuring](#configuring)
-    - [Desktop Application:](#desktop-application)
-    - [Website:](#website)
-  - [Notes](#notes)
-  - [Missing Features](#missing-features)
-  - [Changelog](#changelog)
+<details>
+  <summary>Step 1 of 5</summary>
   
-## Configuring
+  Open your Discord app and enter the user settings.
+  ![https://imgur.com/HnNnmRT](https://i.imgur.com/HnNnmRT.png "Step 1")
+  
+</details>
 
-### Desktop Application:
+<details>
+  <summary>Step 2 of 5</summary>
+  
+  Traverse to advanced and enable developer mode if it is not enabled.
+  ![https://imgur.com/LTrGjVX](https://i.imgur.com/LTrGjVX.png "Step 2")
+  ![https://imgur.com/7ItCXBV](https://i.imgur.com/v9JD4db.png "Step 3")
+  
+  It appears that the developers of the Discord desktop application have implemented another method by which to keep people from normally being able to access the developer tools.
+  ![https://i.imgur.com/BuZf2qn.png](https://i.imgur.com/BuZf2qn.png "Developer Update")
 
-**Step 1:**
-Open your Discord app and enter the user settings.
-![https://imgur.com/HnNnmRT](https://i.imgur.com/HnNnmRT.png "Step 1")
+  This doesn't necessarily prevent us from being able to make use of this script but I'm definitely going to have to figure something out that doesn't require you to have to put in your passwords or any two-factor authentication tokens; this is the most convenient method for me to implement for the time-being but it's becoming increasingly difficult to continue on like this given that people have accidentally pushed their own authorization tokens to their own public forks of this repository in the past which only serves to reinforce decisions like this from the Discord staff.
+  
+</details>
 
+<<<<<<< HEAD
 **Steps 2 and 3:**
 Under the App settings, go to Advanced and enable developer mode (applicable for the web app and desktop version).
 ![https://imgur.com/LTrGjVX](https://i.imgur.com/LTrGjVX.png "Step 2")
 ![https://imgur.com/7ItCXBV](https://i.imgur.com/7ItCXBV.png "Step 3")
+=======
+<details>
+  <summary>Step 3 of 5</summary>
+  
+  Open the developer tools by pressing <kbd>CTRL</kbd> <kbd>⇧ SHIFT</kbd> <kbd>I</kbd> or <kbd>Command ⌘</kbd> <kbd>⇧ Shift</kbd> <kbd>I</kbd> on macOS and navigate to the network tab to gather your authorization token by moving about the interface *(in this example I jumped to the Nitro tab and back to generate the "science" request)*.
+  ![https://imgur.com/o9Sf0CH](https://i.imgur.com/o9Sf0CH.png "Step 4")
+>>>>>>> 6e2232a96b7afd2a9e13f866cdf7cd03f08238f8
 
-**UPDATE:**
-It appears that the developers of the Discord desktop application have implemented another method by which to keep people from normally being able to access the developer tools.
-![https://i.imgur.com/BuZf2qn.png](https://i.imgur.com/BuZf2qn.png "Step 3.5")
 
-This doesn't necessarily prevent us from being able to make use of this script but I'm definitely going to have to figure something out that doesn't require you to have to put in your passwords or any two-factor authentication tokens; this is the most convenient method for me to implement for the time-being but it's becoming increasingly difficult to continue on like this given that people have accidentally pushed their own authorization tokens to their own public forks of this repository in the past which only serves to reinforce decisions like this from the Discord staff.
+</details>
 
-### Website:
+<details>
+  <summary>Step 4 of 5</summary>
+  
+  Gather the guild ID that you want to scrape from by right-clicking on the icon for the guild on the left-side of the Discord window and selecting *"Copy ID"*.
+  ![https://imgur.com/14ysTcN](https://i.imgur.com/14ysTcN.png "Step 5")
 
-**Step 4:**
-Open the developer tools by pressing CTRL + SHIFT + I *(Command + Shift + I on macOS)* and navigate to the network tab to gather your authorization token by moving about the interface *(in this example I jumped to the Nitro tab and back to generate the "science" request)*.
-![https://imgur.com/o9Sf0CH](https://i.imgur.com/o9Sf0CH.png "Step 4")
+  If you're wanting to grab from a direct message instead, then this method won't return the correct ID that is needed by the script.
 
-You'll want to create a new document, you can name it anything you want as long as the name ends with `.token`.
-Here's a list of examples that can be used:
-```
-my.token.txt
-another.token.rtf
-yes another token.token
-```
+  The only real way to get this with ease through the Discord app is to open the direct message you want to scrape from and then open the developer tools to see the correct ID in the title bar of the developer tools window and paste it into the JSON file.
 
-The `.gitignore` file will tell git *(or the Github desktop application)* to avoid pushing any file whose name and extension matches the ones in the file.
+</details>
 
-**Step 5:**
-Gather the guild ID that you want to scrape from by right-clicking on the icon for the guild on the left-side of the Discord window and selecting *"Copy ID"*.
-![https://imgur.com/14ysTcN](https://i.imgur.com/14ysTcN.png "Step 5")
+<details>
+  <summary>Step 5 of 5</summary>
 
-If you're wanting to grab from a direct message instead, then this method won't return the correct ID that is needed by the script.
+  Gather the channel ID that you want to scrape from by right-clicking on the channel name to the right of the guild icons and selecting *"Copy ID"*.
+  ![https://imgur.com/cdpTLCG](https://i.imgur.com/cdpTLCG.png "Step 6")
+  
+  From there you should be ready to run the script to start the downloading process.
 
-The only real way to get this with ease through the Discord app is to open the direct message you want to scrape from and then open the developer tools to see the correct ID in the title bar of the developer tools window and paste it into the JSON file.
+</details>
 
-**Step 6:**
-Gather the channel ID that you want to scrape from by right-clicking on the channel name to the right of the guild icons and selecting *"Copy ID"*.
-![https://imgur.com/cdpTLCG](https://i.imgur.com/cdpTLCG.png "Step 6")
+<details>
+  <summary>Protecting your Authorization Token</summary>
 
-**Step 7:**
-Run the script to start the downloading process.
+  You'll want to create a new document, you can name it anything you want as long as the name ends with `.token`.
+  Here's a list of examples that can be used:
+  ```
+  my.token.txt
+  another.token.rtf
+  yes another token.token
+  ```
+
+  The [gitignore](.gitignore) file will tell git *(or the Github desktop application)* to avoid pushing any file whose name and extension matches the ones in the file.
+
+</details>
 
 **Step 8:**
 Run the JsonFormat.py script under the modules folder to output your scrape in a readable format. 
@@ -67,7 +84,7 @@ NOTE: This script is still a work in progress but it already makes the results l
 * You can copy in multiple channels on multiple guilds if you want to.
 * You must make modifications to the JSON file before running the script *(otherwise you'll end up with errors)*.
 
-## Missing Features
+## TODO
 
 - DM grabbing
 - Config options handling
@@ -78,10 +95,13 @@ NOTE: This script is still a work in progress but it already makes the results l
 
 **The dates below are in YYYY-MM-DD formatting (ISO 8601).**
 
+<details>
+  <summary>Changelog</summary>
+
 2021-02-10 - Starting the path to finalizing the experimental branch:
 * Fixed a major oversight when it comes to scraping more than 25 posts for each day (more than 25 requires an offset query to be added to the undocumented API call).
 * Allowing for direct media grabbing alongside JSON caching to save on time (it was faster to grab both JSON and media simultaneously day-by-day as opposed to grabbing JSON data in bulk and then checking each JSON file afterwards).
-* Finally figured out a method of getting the script to stop whenever `CTRL + C` is pressed on the keyboard (apparently sys.exit cares about flushing stdout buffers as opposed to os._exit)
+  * Finally figured out a method of getting the script to stop whenever <kbd>Ctrl</kbd> <kbd>C</kbd> is pressed on the keyboard (apparently sys.exit cares about flushing stdout buffers as opposed to os._exit)
 
 2020-12-30 - Alleviating some Issues:
 * Opting for JSON caching as opposed to direct media grabbing *(smaller and comes with more info)*.
@@ -147,3 +167,9 @@ NOTE: This script is still a work in progress but it already makes the results l
 * The first release of the script.
 * Not meant for production use.
 * Still has bugs to fix and features to implement.
+
+</details>
+
+## Resources
+
+[Most of the resources that can be used to further development on this script have been provided in the wiki for this project](https://github.com/Dracovian/Discord-Scraper/wiki)

@@ -370,12 +370,23 @@ class DiscordScraper(object):
         
         # Split the url into parts.
         urlparts = url.split('/')
+<<<<<<< HEAD
         #bat#TODO: I think this uses the forward slash as a delimeter.
 
         # Generate a file name from the url parts.
         filename = DiscordScraper.getSafeName('{0}_{1}'.format(urlparts[-2], urlparts[-1])) if self.sanitizeFileNames else '{0}_{1}'.format(urlparts[-2], urlparts[-1])
         #bat#TODO: i dont know the getSafeName function and the parameters it takes.
         
+=======
+        
+        # Generate a file name from the url parts.
+        filename_head = urlparts[-2]
+        filename_foot = urlparts[-1]
+
+        # Generate a file name from the url parts.
+        filename = DiscordScraper.getSafeName('{0}_{1}'.format(filename_head, filename_foot)) if self.sanitizeFileNames else '{0}_{1}'.format(filename_head, filename_foot)
+
+>>>>>>> 6e2232a96b7afd2a9e13f866cdf7cd03f08238f8
         # Join the file name with the location.
         filename = path.join(location, filename)
 
@@ -408,7 +419,7 @@ class DiscordScraper(object):
 
                     # Iterate through each message one-by-one.
                     for message in messages:
-
+                        
                         # Iterate through all of the attachments to check them one-by-one.
                         for attachment in message['attachments']:
 
@@ -445,19 +456,19 @@ class DiscordScraper(object):
                         for embed in message['embeds']:
 
                             # Determine if there are any embedded images.
-                            if self.types['images'] and embed['type'] in ['image', 'gifv']:
+                            if self.types['images']:
 
                                 # Get the URL for our content.
-                                url = embed['url']
+                                url = embed['image']['proxy_url']
                                 
                                 # Begin downloading this file if so.
                                 self.startDownloading(url, self.location)
 
                             # Determine if there are any embedded videos.
-                            if self.types['videos'] and embed['type'] == 'video':
+                            if self.types['videos']:
 
                                 # Get the URL for our content.
-                                url = embed['url']
+                                url = embed['video']['proxy_url']
 
                                 # Begin downloading this file if so.
                                 self.startDownloading(url, self.location)

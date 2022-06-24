@@ -69,15 +69,28 @@ class DiscordRequest(object):
 
         # Split the URL into parts.
         urlparts = url.split('/')
+        
+        # Grab the domain name from the urlparts.
+        domain = urlparts[2].split(':')[0]
 
         # Grab the URL path from the urlparts.
         urlpath = '/{0}'.format('/'.join(urlparts[3:]))
+        
+        # Determine if the domain is safe or unsafe.
+        if domain.endswith('.discordapp.net') or domain.endswith('.discord.com') or domain in ['discordapp.net', 'discord.com']:
+            safedomain = True
 
         # Create a reference to the HTTPSConnection class.
-        connection = HTTPSConnection(urlparts[2], 443)
+        connection = HTTPSConnection(domain, 443)
 
+        # Ensure that we're not sending authorization tokens to non-Domain domains.
+        if safedomain:
+            headers = self.headers
+        else:
+            headers = {'User-Agent': 'Mozilla/5.0', 'Referer': 'https://discord.com/'}
+            
         # Request the data from the connection.
-        connection.request('GET', urlpath, headers=self.headers)
+        connection.request('GET', urlpath, headers=headers)
 
         # Retrieve the response from the request.
         response = connection.getresponse()
@@ -101,12 +114,8 @@ class DiscordRequest(object):
             # Grab the domain name for the redirected location.
             domain = url.split('/')[2].split(':')[0]
 
-            # If the domain is a part of Discord then re-run this function.
-            if domain in ['discordapp.com', 'discord.com']:
-                self.sendRequest(url)
-            
-            # Throw a warning message to acknowledge an untrusted redirect.
-            warn('Ignored unsafe redirect to {0}.'.format(url))
+            # Follow the redirect
+            self.sendRequest(url)
         
         # Otherwise throw a warning message to acknowledge a failed connection.
         else: warn('HTTP {0} from {1}.'.format(response.status, url))
